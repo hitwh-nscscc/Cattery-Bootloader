@@ -28,3 +28,9 @@ download.sh
 upload.sh
 madmewmew.jpg
 pic.h
+*.o
+*.elf
+*.srec
+*.s
+*.bin
+*.coe
