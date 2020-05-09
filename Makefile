@@ -21,10 +21,10 @@
 # =============================================================================
 ######## CONFIGURATION #########
 
-LEDBASE =		0xBFD10000					# Base addr of AXI GPIO to control LEDs
-UARTBASE = 		0xBFD12000					# Base addr of AXI UART16550. 
+LEDBASE =		0xB0600000					# Base addr of AXI GPIO to control LEDs
+UARTBASE = 		0xB0400000					# Base addr of AXI UART16550. 
 											# RegOffset is calculated in cattery_peripherals.h
-SPIBASE = 		0xBDA00000					# Base addr of SPI Flash read addr, not CRs addr!
+SPIBASE = 		0xBD000000					# Base addr of SPI Flash read addr, not CRs addr!
 
 LOADADDR = 		0xBFC00000					# Bootloader load address
 RAM_LOADADDR =  0x80000000					# Binary file memory load address
@@ -52,7 +52,7 @@ drop-sections   = .reginfo .mdebug
 strip-flags     = $(addprefix --remove-section=,$(drop-sections))
 
 
-all : clean elf srec bin coe disasm spi_main nmgrep scp
+all : clean elf srec bin coe disasm spi_main nmgrep
 
 srec : 		$(TARGET).srec
 elf : 		$(TARGET).elf
@@ -105,6 +105,3 @@ spi_main.bin: 		spi_main.elf
 
 spi_main.elf:		spi_start.o spi_main.o cattery_peripherals.o printf.o print.o
 	$(LD) -o spi_main.elf -N -Tspi_main.lds -Ttext 0x80200000 $^
-
-scp:
-	scp $(TARGET).coe spi_main.bin Drancick@192.168.200.1:/e/Graduation_Project/mips32r1/ragdollsoc/ragdollsoc.srcs/ragdollsoc.coe
