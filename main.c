@@ -219,7 +219,7 @@ int main(int argc, char** argv)
     uint32  spi_data    = 0, ram_data   = 0;
 
     printf(" Disable KSEG0 cacheability...\n\n");
-    toggle_kseg0_cacheability(0);
+    Toggle_CKSEG0(0);
 
     printLogo(main);
 
@@ -266,7 +266,7 @@ int main(int argc, char** argv)
             printf(" -> Booting from memory...\n");
 
             printf(" -> Enable KSEG0 Cacheability? (0:NO / 1:YES) : ");
-            if(UART16550_ReadbackChar() == '1') toggle_kseg0_cacheability(1);
+            if(UART16550_ReadbackChar() == '1') Toggle_CKSEG0(1);
             printf("\n");
 
             asm volatile
@@ -286,7 +286,7 @@ int main(int argc, char** argv)
             DumpAddrRange(SPIBASE, 1024);
 
             printf(" -> Enable KSEG0 Cacheability...\n\n");
-            toggle_kseg0_cacheability(1);
+            Toggle_CKSEG0(1);
 
             printf("### Handle control to Das U-Boot. ###\n");
             
