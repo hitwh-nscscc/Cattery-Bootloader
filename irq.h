@@ -31,8 +31,8 @@
 #define         GetIRQ(CP0_ST, IRQ_BIT) CP0_ST & IRQ_MASK & IRQ_BIT == IRQ_BIT
 #define         TRACE_COUNT         4
 
-uint32          get_cp0status();
-uint32          get_cp0cause();
+uint32          get_cp0Status();
+uint32          get_cp0Cause();
 uint32          get_cp0EPC();
 
 // extern uint8    _GLOBAL_TIMER_ON;
