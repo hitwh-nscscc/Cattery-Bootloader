@@ -22,10 +22,10 @@
 
 #ifndef __CATTERY_SLEEP_H_
 #define __CATTERY_SLEEP_H_
-#endif
 
 #include "irq.h"
 
 void        set_cp0compare(uint32 sec);
 void        mysleep(uint32 sec);
 
+#endif

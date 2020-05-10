@@ -22,7 +22,6 @@
 
 #ifndef __CATTERY_IRQ_H_
 #define __CATTERY_IRQ_H_
-#endif
 
 #include "regdef.h"
 #include "cp0regdef.h"
@@ -36,3 +35,5 @@ uint32          get_cp0Cause();
 uint32          get_cp0EPC();
 
 // extern uint8    _GLOBAL_TIMER_ON;
+
+#endif

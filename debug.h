@@ -22,8 +22,9 @@
 
 #ifndef __CATTERY_DEBUG_H_
 #define __CATTERY_DEBUG_H_
-#endif
 
 #include "def.h"
 
 #define debugReg(ADDR) printf("# [DEBUG REGDATA] :: RegAddr 0x%08x [DATA: 0x%08x]\n", (ADDR), *((voluint32)(ADDR)))
+
+#endif
