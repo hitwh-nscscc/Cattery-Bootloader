@@ -33,7 +33,7 @@ uint8 _GLOBAL_TIMER_ON = 0;
 
 void printStack()
 {
-    uint32 status = get_cp0status(), cause = get_cp0cause(), EPC = get_cp0EPC();
+    uint32 status = get_cp0Status(), cause = get_cp0Cause(), EPC = get_cp0EPC();
     uint32 ExcCode = 0;
     ExcCode = (cause & 0x7C) >> 2;
 
@@ -84,7 +84,7 @@ void tlb_error()
     for(;;);
 }
 
-uint32 get_cp0status()
+uint32 get_cp0Status()
 {
     uint32 cp0status;
     asm volatile
@@ -95,7 +95,7 @@ uint32 get_cp0status()
     return cp0status;
 }
 
-uint32 get_cp0cause()
+uint32 get_cp0Cause()
 {
     uint32 cp0cause;
     asm volatile
