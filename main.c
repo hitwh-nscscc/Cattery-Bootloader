@@ -23,51 +23,53 @@
 #include "printf.h"
 #include "cattery_peripherals.h"
 
+#ifdef DEBUG
+#define fullprintf printf
+#else
+#define fullprintf (void)
+#endif
+
 void printLogo(uint32 main_addr)
 {
-    printf("                            ArHShRn :: Ragdoll SoC :: Cattery BIOS\n\n\n");
-    printf(" _____       _   _                   ______             _   _                 _           \n");
-    printf("/  __ \\     | | | |                  | ___ \\           | | | |               | |          \n");
-    printf("| /  \\/ __ _| |_| |_ ___ _ __ _   _  | |_/ / ___   ___ | |_| | ___   __ _  __| | ___ _ __ \n");
-    printf("| |    / _` | __| __/ _ \\ '__| | | | | ___ \\/ _ \\ / _ \\| __| |/ _ \\ / _` |/ _` |/ _ \\ '__|\n");
-    printf("| \\__/\\ (_| | |_| ||  __/ |  | |_| | | |_/ / (_) | (_) | |_| | (_) | (_| | (_| |  __/ |   \n");
-    printf(" \\____/\\__,_|\\__|\\__\\___|_|   \\__, | \\____/ \\___/ \\___/ \\__|_|\\___/ \\__,_|\\__,_|\\___|_|   \n");
-    printf("                               __/ |                                                      \n");
-    printf("                              |___/                                                       \n");
-    printf("  \n");
-    printf("                                          /\\_____/\\\n");
-    printf("                                         /  o   o  \\\n");
-    printf("                                        ( ==  ^  == )\n");
-    printf("                                         )         (\n");
-    printf("                                        (           )\n");
-    printf("                                       ( (  )   (  ) )\n");
-    printf("                                      (__(__)___(__)__)\n");
+    printf("                      /\\_____/\\\n");
+    printf("                     /  o   o  \\\n");
+    printf("                    ( ==  ^  == )\n");
+    printf("                     )         (\n");
+    printf("                    (           )\n");
+    printf("                   ( (  )   (  ) )\n");
+    printf("                  (__(__)___(__)__)\n");
     printf(" \n");
-    printf("                                 Code And Concept By ArHShRn\n");
-    printf("                                \n");
-    printf("==================================https://github.com/ArHShRn==================================\n\n");
-    printf(" Welcome to Cattery Bootloader (BOOT ROM).\n");
-    printf(" \tCurrent main Addr = 0x%08x\n", main_addr);
+    printf(" Welcome to Cattery Bootloader.\n");
+    printf(" \t## STATUS:\n");
+    printf(" \t\tBootloader Loading Address : 0x%08X\n", LOADADDR);
+    printf(" \t\t           Main Entrance   : 0x%08X\n", main_addr);
+    #ifdef DEBUG
+    printf(" \t\t           Booting Mode    : Full\n");
+    #else
+    printf(" \t\t           Booting Mode    : Reduced\n");
+    #endif
 
     return;
 }
 
+#ifdef DEBUG
+// Print full mode functions.
 void printHelp()
 {
-    printf(" -=          Cattery Bootloader has several launching modes          =-\n\n");
-    printf("\t 1 - Memory Test      : Write n'  Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
-    printf("\t 2 - Memory Dump      :           Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
-    printf("\t 3 - SPI Flash Dump   :           Dump 1K Data From 0x%08X\n", SPIBASE);
-    printf("\t 4 - Load SPI to Mem  : Copy SPI Flash data to Memory 0x%08X\n", RAM_LOADADDR);
-    printf("\t 5 - BootM            : From Memory\n");
-    printf("\t 6 - BootSPI          : From SPI Flash\n");
-    printf("\t 7 - Load Serial      : Receive binary from serial and copy it to Mem\n");
-    printf("\t 8 - Read  Mem Data   : Read a data from a given address.\n");
-    printf("\t 9 - Alter Mem Data   : Set a specified data to a given addr\n");
-    printf("\t a - Dump Addr Range  : Dump a given range from a given start address\n");
-    printf("\t b - Memory Reset     : Set 1M Data 0x00000000 From 0x%08X\n", RAM_LOADADDR);
-    printf("\t 0 - END CALL         : TERMINATE THE BOOTLOADER, INFINITE LOOP.\n");
-    printf(" -====================================================================-\n");
+    fullprintf(" -=          Cattery Bootloader has several launching modes          =-\n\n");
+    fullprintf("\t 1 - Memory Test      : Write n'  Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
+    fullprintf("\t 2 - Memory Dump      :           Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
+    fullprintf("\t 3 - SPI Flash Dump   :           Dump 1K Data From 0x%08X\n", SPIBASE);
+    fullprintf("\t 4 - Load SPI to Mem  : Copy SPI Flash data to Memory 0x%08X\n", RAM_LOADADDR);
+    fullprintf("\t 5 - BootM            : From Memory\n");
+    fullprintf("\t 6 - BootSPI          : From SPI Flash\n");
+    fullprintf("\t 7 - Load Serial      : Receive binary from serial and copy it to Mem\n");
+    fullprintf("\t 8 - Read  Mem Data   : Read a data from a given address.\n");
+    fullprintf("\t 9 - Alter Mem Data   : Set a specified data to a given addr\n");
+    fullprintf("\t a - Dump Addr Range  : Dump a given range from a given start address\n");
+    fullprintf("\t b - Memory Reset     : Set 1M Data 0x00000000 From 0x%08X\n", RAM_LOADADDR);
+    fullprintf("\t 0 - END CALL         : TERMINATE THE BOOTLOADER, INFINITE LOOP.\n");
+    fullprintf(" -====================================================================-\n");
 
     return;
 }
@@ -218,7 +220,6 @@ int main(int argc, char** argv)
     uint32  err_flag    = 0;
     uint32  spi_data    = 0, ram_data   = 0;
 
-    printf(" Disable KSEG0 cacheability...\n\n");
     Toggle_CKSEG0(0);
 
     printLogo(main);
@@ -358,10 +359,37 @@ int main(int argc, char** argv)
     
     return 0;
 }
+#else
+int main(int argc, char** argv)                                
+{
+    uint32 addr = SPIBASE;
+
+    Toggle_CKSEG0(0);
+    printLogo(main);
+
+    // Start to boot U-Boot(or else) from SPI.
+    //  Generally dump SPI Flash for twice to ensure the data is right.
+    In32((voluint32)SPIBASE);
+    In32((voluint32)SPIBASE);
+
+    printf(" -> Booting from 0x%08X...\n", addr);
+    printf(" -> Enable KSEG0 Cacheability...\n\n");
+    Toggle_CKSEG0(1);
+    printf("#### Handle control to the next stage. ####\n");
+    
+    asm volatile
+    (   
+        "jr %0\t\n  \
+        nop \t\n"   \
+        ::"r"(addr)
+    );
+
+    return 0;
+}
+#endif
 
 void end_call()
 {
     printf("#### [CATTERY BOOTLOADER] PROGRAM HAS TERMINATED, LIFE CYCLE ENDED.\n");
-    printf("#### [CATTERY BOOTLOADER] START TO LOOP.\n");
     for(;;);
 }
