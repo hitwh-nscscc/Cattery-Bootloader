@@ -22,7 +22,6 @@
 
 #ifndef __CATTERY_PERIPHERALS_H_
 #define __CATTERY_PERIPHERALS_H_
-#endif
 
 #include "def.h"
 
@@ -63,3 +62,5 @@ void                                UART16550_PutChar(uint8 data);
 uint32                              UART16550_ReadWord();
 
 void                                Toggle_CKSEG0(int cacheable);
+
+#endif

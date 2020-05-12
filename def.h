@@ -22,8 +22,9 @@
 
 #ifndef __CATTERY_DEF_H_
 #define __CATTERY_DEF_H_
-#endif
 
 typedef                             unsigned char uint8;
 typedef                             unsigned int  uint32;
 typedef                             volatile unsigned int voluint32;
+
+#endif

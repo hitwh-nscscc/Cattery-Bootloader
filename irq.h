@@ -22,11 +22,12 @@
 
 #ifndef __CATTERY_IRQ_H_
 #define __CATTERY_IRQ_H_
-#endif
 
 #include "regdef.h"
 #include "cp0regdef.h"
 #include "def.h"
+#include "cattery_peripherals.h"
+#include "printf.h"
 
 #define         GetIRQ(CP0_ST, IRQ_BIT) CP0_ST & IRQ_MASK & IRQ_BIT == IRQ_BIT
 #define         TRACE_COUNT         4
@@ -36,3 +37,5 @@ uint32          get_cp0Cause();
 uint32          get_cp0EPC();
 
 // extern uint8    _GLOBAL_TIMER_ON;
+
+#endif

@@ -44,7 +44,7 @@ OBJDUMP =  $(CROSS_COMPILE)objdump
 
 TARGET = cattery_bootloader
 
-CFLAGS = -DLEDBASE=${LEDBASE} -DUARTBASE=${UARTBASE} -DSPIBASE=${SPIBASE} -DRAM_LOADADDR=${RAM_LOADADDR} -DRAMSIZE=${RAMSIZE} -DSTACK_SIZE=${STACK_SIZE} -O0 -msoft-float -mips32 -mxgot -fno-builtin -fno-PIC -fno-PIE -ffunction-sections -fdata-sections -G 0 -nostdlib -ffreestanding
+CFLAGS = -DLEDBASE=${LEDBASE} -DUARTBASE=${UARTBASE} -DSPIBASE=${SPIBASE} -DLOADADDR=${LOADADDR} -DRAM_LOADADDR=${RAM_LOADADDR} -DRAMSIZE=${RAMSIZE} -DSTACK_SIZE=${STACK_SIZE} -O0 -msoft-float -mips32 -mxgot -fno-builtin -fno-PIC -fno-PIE -ffunction-sections -fdata-sections -G 0 -nostdlib -ffreestanding
 
 # Drop some uninteresting sections in the kernel.
 # This is only relevant for ELF kernels but doesn't hurt a.out
@@ -52,7 +52,7 @@ drop-sections   = .reginfo .mdebug
 strip-flags     = $(addprefix --remove-section=,$(drop-sections))
 
 
-all : clean elf srec bin coe disasm spi_main nmgrep
+all : clean elf srec bin coe disasm
 
 srec : 		$(TARGET).srec
 elf : 		$(TARGET).elf
@@ -89,19 +89,4 @@ clean:
 
 nm:
 	$(CROSS_COMPILE)nm $(TARGET).elf
-	$(CROSS_COMPILE)nm spi_main.elf
 
-nmgrep:
-	$(CROSS_COMPILE)nm $(TARGET).elf | grep 'bfc00000'
-
-spi_main: 			spi_main.coe
-	$(OBJDUMP) -alD spi_main.elf > spi_main.s
-
-spi_main.coe:		spi_main.bin
-	./bin2coe.elf -f $< -o spi_main.coe
-
-spi_main.bin: 		spi_main.elf
-	$(OBJCOPY) -O binary $(strip-flags) $< spi_main.bin
-
-spi_main.elf:		spi_start.o spi_main.o cattery_peripherals.o printf.o print.o
-	$(LD) -o spi_main.elf -N -Tspi_main.lds -Ttext 0x80200000 $^
