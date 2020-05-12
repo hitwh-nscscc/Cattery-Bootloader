@@ -26,6 +26,8 @@
 #include "regdef.h"
 #include "cp0regdef.h"
 #include "def.h"
+#include "cattery_peripherals.h"
+#include "printf.h"
 
 #define         GetIRQ(CP0_ST, IRQ_BIT) CP0_ST & IRQ_MASK & IRQ_BIT == IRQ_BIT
 #define         TRACE_COUNT         4

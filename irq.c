@@ -20,11 +20,11 @@
 //  https://github.com/ArHShRn
 // =============================================================================
 
-#include "def.h"
-#include "regdef.h"
-#include "cp0regdef.h"
-#include "cattery_peripherals.h"
-#include "printf.h"
+// #include "def.h"
+// #include "regdef.h"
+// #include "cp0regdef.h"
+// #include "cattery_peripherals.h"
+// #include "printf.h"
 #include "irq.h"
 
 // #define DEBUG
