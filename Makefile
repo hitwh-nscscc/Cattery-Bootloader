@@ -21,19 +21,25 @@
 # =============================================================================
 ######## CONFIGURATION #########
 
-LEDBASE =		0xBFD10000					# Base addr of AXI GPIO to control LEDs
-UARTBASE = 		0xBFD12000					# Base addr of AXI UART16550. 
-											# RegOffset is calculated in cattery_peripherals.h
-SPIBASE = 		0xBDA00000					# Base addr of SPI Flash read addr, not CRs addr!
+## GENERAL CONFIG
+LEDBASE 		=		0xBFD10000					# Base addr of AXI GPIO to control LEDs
+UARTBASE 		= 		0xBFD12000					# Base addr of AXI UART16550. 
+													# RegOffset is calculated in cattery_peripherals.h
+SPIBASE 		= 		0xBDA00000					# Base addr of SPI Flash read addr, not CRs addr!
 
-LOADADDR = 		0xBFC00000					# Bootloader load address
-RAM_LOADADDR =  0x80000000					# Binary file memory load address
+LOADADDR 		= 		0xBFC00000					# Bootloader load address
+RAM_LOADADDR 	=  		0x80000000					# Binary file memory load address
 								
-RAMSIZE = 		0x07000000					# 128M - 16M / 16M GRAM
+RAMSIZE 		= 		0x07000000					# 128M - 16M / 16M GRAM
 				
-STACK_SIZE =	0x00001000					# 4K, U-Boot recommended
+STACK_SIZE 		=		0x00001000					# 4K, U-Boot recommended
 
 CROSS_COMPILE = mipsel-linux-gnu-
+
+## SCP CONFIG
+USERNAME 		= 		Drancick
+HOSTNAME		=  		192.168.200.1
+TARGETNAME		=		
 
 ######## END OF CONFIGURATION #########
 
@@ -52,7 +58,7 @@ drop-sections   = .reginfo .mdebug
 strip-flags     = $(addprefix --remove-section=,$(drop-sections))
 
 
-all : clean elf srec bin coe disasm scp
+all : clean elf srec bin coe disasm
 
 srec : 		$(TARGET).srec
 elf : 		$(TARGET).elf
@@ -91,4 +97,4 @@ nm:
 	$(CROSS_COMPILE)nm $(TARGET).elf
 
 scp:
-	scp $(TARGET).coe $(TARGET).bin Drancick@192.168.200.1:/e/Graduation_Project/mips32r1/ragdollsoc/ragdollsoc.srcs/ragdollsoc.coe
+	scp $(TARGET).coe $(TARGET).bin $(USERNAME)@$(HOSTNAME):$(TARGETNAME)
