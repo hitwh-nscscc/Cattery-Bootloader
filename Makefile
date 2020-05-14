@@ -98,3 +98,4 @@ nm:
 
 scp:
 	scp $(TARGET).coe $(TARGET).bin $(USERNAME)@$(HOSTNAME):$(TARGETNAME)
+
