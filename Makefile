@@ -29,11 +29,16 @@ SPIBASE = 		0xBD000000					# Base addr of SPI Flash read addr, not CRs addr!
 LOADADDR = 		0xBFC00000					# Bootloader load address
 RAM_LOADADDR =  0x80000000					# Binary file memory load address
 								
-RAMSIZE = 		0x07000000					# 128M - 16M / 16M GRAM
+RAMSIZE 		= 		0x07000000					# 128M - 16M / 16M GRAM
 				
-STACK_SIZE =	0x00001000					# 4K, U-Boot recommended
+STACK_SIZE 		=		0x00001000					# 4K, U-Boot recommended
 
 CROSS_COMPILE = mipsel-linux-gnu-
+
+## SCP CONFIG
+USERNAME 		= 		Drancick
+HOSTNAME		=  		192.168.200.1
+TARGETNAME		=		
 
 ######## END OF CONFIGURATION #########
 
