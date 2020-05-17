@@ -1,6 +1,7 @@
 # Cattery Bootloader - First Stage Bootloader
-STATUS: [![Build status](https://ci.appveyor.com/api/projects/status/dc7urowjl0nnnb0k?svg=true)](https://ci.appveyor.com/project/ArHShRn/cattery-bootloader) <br>
-Master STATUS: [![Build status](https://ci.appveyor.com/api/projects/status/dc7urowjl0nnnb0k/branch/master?svg=true)](https://ci.appveyor.com/project/ArHShRn/cattery-bootloader/branch/master) <br>
+most recently [![Build status](https://ci.appveyor.com/api/projects/status/dc7urowjl0nnnb0k?svg=true)](https://ci.appveyor.com/project/ArHShRn/cattery-bootloader) <br>
+branch/master [![Build status](https://ci.appveyor.com/api/projects/status/dc7urowjl0nnnb0k/branch/master?svg=true)](https://ci.appveyor.com/project/ArHShRn/cattery-bootloader/branch/master) <br>
+branch/rdev [![Build status](https://ci.appveyor.com/api/projects/status/dc7urowjl0nnnb0k/branch/rdev?svg=true)](https://ci.appveyor.com/project/ArHShRn/cattery-bootloader/branch/rdev) <br>
 ----
 Cattery Bootloader is a first-stage bootloader targeting RagdollSoC, MIPS32EL, used for board-level initializing and have an exception vector that catches magic error.
 
