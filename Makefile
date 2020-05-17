@@ -49,7 +49,7 @@ drop-sections   = .reginfo .mdebug
 strip-flags     = $(addprefix --remove-section=,$(drop-sections))
 
 
-all : clean elf srec bin coe disasm
+all : clean elf srec bin coe disasm cp
 
 srec : 		$(TARGET).srec
 elf : 		$(TARGET).elf
@@ -86,4 +86,7 @@ clean:
 
 nm:
 	$(CROSS_COMPILE)nm $(TARGET).elf
+
+cp:
+	cp cattery_bootloader.coe ../CatnipSoC/CatnipSoC.srcs/sources_1/
 
