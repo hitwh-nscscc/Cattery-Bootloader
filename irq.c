@@ -35,11 +35,22 @@ void printStack()
 {
     uint32 status = get_cp0Status(), cause = get_cp0Cause(), EPC = get_cp0EPC();
     uint32 ExcCode = 0;
+    uint32 gp, sp, fp, ra;
+
+    asm volatile("move %0, $gp\n\t" : "=r" (gp));
+    asm volatile("move %0, $sp\n\t" : "=r" (sp));
+    asm volatile("move %0, $fp\n\t" : "=r" (fp));
+    asm volatile("move %0, $ra\n\t" : "=r" (ra));
     ExcCode = (cause & 0x7C) >> 2;
 
     printf("\n## WARNING :: UNHANDLED EXCEPTION!\n");
     printf("#  CP0 EPC      = 0x%08x\n",    EPC);
     printf("#  INSTRUCTION  = 0x%08x\n\n",  In32(EPC));
+    
+    printf("#  GP           = 0x%08x\n",    gp);
+    printf("#  SP           = 0x%08x\n",    sp);
+    printf("#  FP           = 0x%08x\n",    fp);
+    printf("#  RA           = 0x%08x\n\n",  ra);
 
     printf("#  CP0 STATUS   = 0x%08x\n",    status);
     printf("#  CP0 CAUSE    = 0x%08x\n",    cause);
