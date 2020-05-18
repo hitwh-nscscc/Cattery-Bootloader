@@ -23,7 +23,7 @@
 #include "printf.h"
 #include "cattery_peripherals.h"
 
-#define DEBUG
+//#define DEBUG
 
 // #ifdef DEBUG
 // #define fullprintf printf
