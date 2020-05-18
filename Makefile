@@ -49,7 +49,7 @@ drop-sections   = .reginfo .mdebug
 strip-flags     = $(addprefix --remove-section=,$(drop-sections))
 
 
-all : clean elf srec bin coe disasm cp
+all : clean elf srec bin coe disasm
 
 srec : 		$(TARGET).srec
 elf : 		$(TARGET).elf

@@ -5,6 +5,8 @@ branch/rdev [![Build status](https://ci.appveyor.com/api/projects/status/dc7urow
 ----
 Cattery Bootloader is a first-stage bootloader targeting RagdollSoC, MIPS32EL, used for board-level initializing and have an exception vector that catches magic error.
 
+This branch is the ported version of Cattery Bootloader targeting [CatnipSoC](https://github.com/RickyTino/CatnipSoC).
+
 For now, Cattery Bootloader has two booting modes(all of them are configured at coding time using #define DEBUG or not):
 
 - Full Mode: Full functionality, contains several testing methods to test the board.
