@@ -367,6 +367,7 @@ int main(int argc, char** argv)
     uint32 addr = SPIBASE;
 
     Toggle_CKSEG0(0);
+    printf("\n");
     printLogo(main);
 
     // Start to boot U-Boot(or else) from SPI.
