@@ -41,7 +41,7 @@ void UART16550_Init()
     // enable DLAB latch
     WriteReg(UART_LCR_ADDR, 0, 0x80);
     // set the baudrate to 115200
-    WriteReg(UART_DLL_ADDR, 0, 0x36);
+    WriteReg(UART_DLL_ADDR, 0, 0x1B);  // 50M / (16 x 115200) = 0x1B
     WriteReg(UART_DLM_ADDR, 0, 0x0);
     // 8 data bits, 1 stop bit, parity off; turn off DLAB latch
     WriteReg(UART_LCR_ADDR, 0, ~0x80 & 0x03);
