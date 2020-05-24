@@ -32,7 +32,8 @@
 #define GETBIT(x,y)                 ((x) >> (y) & 1)
 
 /* Base Addresses and Register Offsets */
-#define HLED_BASE_ADDR	            LEDBASE
+#define HLED_BASE_ADDR	            LEDBASE                     // GPIO1_Data
+#define HSWITCH_BASE_ADDR           LEDBASE + 0x0008            // GPIO2_Data
 
 #define UART_REGBASE_ADDR           UARTBASE + 0x1000
 #define UART_DAT_ADDR               UART_REGBASE_ADDR + 0x0
