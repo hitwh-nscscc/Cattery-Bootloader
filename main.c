@@ -47,20 +47,20 @@ void printLogo(uint32 main_addr, uint8 ctl)
 // Print full mode functions.
 void printHelp()
 {
-    fullprintf(" -=          Cattery Bootloader has several launching modes          =-\n\n");
-    fullprintf("\t 1 - Memory Test      : Write n'  Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
-    fullprintf("\t 2 - Memory Dump      :           Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
-    fullprintf("\t 3 - SPI Flash Dump   :           Dump 1K Data From 0x%08X\n", SPIBASE);
-    fullprintf("\t 4 - Load SPI to Mem  : Copy SPI Flash data to Memory 0x%08X\n", RAM_LOADADDR);
-    fullprintf("\t 5 - BootM            : From Memory\n");
-    fullprintf("\t 6 - BootSPI          : From SPI Flash\n");
-    fullprintf("\t 7 - Load Serial      : Receive binary from serial and copy it to Mem\n");
-    fullprintf("\t 8 - Read  Mem Data   : Read a data from a given address.\n");
-    fullprintf("\t 9 - Alter Mem Data   : Set a specified data to a given addr\n");
-    fullprintf("\t a - Dump Addr Range  : Dump a given range from a given start address\n");
-    fullprintf("\t b - Memory Reset     : Set 1M Data 0x00000000 From 0x%08X\n", RAM_LOADADDR);
-    fullprintf("\t 0 - END CALL         : TERMINATE THE BOOTLOADER, INFINITE LOOP.\n");
-    fullprintf(" -====================================================================-\n");
+    printf(" -=          Cattery Bootloader has several launching modes          =-\n\n");
+    printf("\t 1 - Memory Test      : Write n'  Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
+    printf("\t 2 - Memory Dump      :           Dump 1K Data From 0x%08X\n", RAM_LOADADDR);
+    printf("\t 3 - SPI Flash Dump   :           Dump 1K Data From 0x%08X\n", SPIBASE);
+    printf("\t 4 - Load SPI to Mem  : Copy SPI Flash data to Memory 0x%08X\n", RAM_LOADADDR);
+    printf("\t 5 - BootM            : From Memory\n");
+    printf("\t 6 - BootSPI          : From SPI Flash\n");
+    printf("\t 7 - Load Serial      : Receive binary from serial and copy it to Mem\n");
+    printf("\t 8 - Read  Mem Data   : Read a data from a given address.\n");
+    printf("\t 9 - Alter Mem Data   : Set a specified data to a given addr\n");
+    printf("\t a - Dump Addr Range  : Dump a given range from a given start address\n");
+    printf("\t b - Memory Reset     : Set 1M Data 0x00000000 From 0x%08X\n", RAM_LOADADDR);
+    printf("\t 0 - END CALL         : TERMINATE THE BOOTLOADER, INFINITE LOOP.\n");
+    printf(" -====================================================================-\n");
 
     return;
 }
