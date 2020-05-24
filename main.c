@@ -35,11 +35,11 @@ void printLogo(uint32 main_addr, uint8 ctl)
     printf("                  (__(__)___(__)__)\n");
     printf(" \n");
     printf(" Welcome to Cattery Bootloader.\n");
-    printf(" \t## STATUS:\n");
-    printf(" \t\tBootloader Loading Address : 0x%08X\n", LOADADDR);
-    printf(" \t\t           Main Entrance   : 0x%08X\n", main_addr);
-    if(ctl == 1)    printf(" \t\t           Booting Mode    : Full\n");
-    else            printf(" \t\t           Booting Mode    : Reduced\n");
+    printf(" ## STATUS:\n");
+    printf(" \tBootloader Loading Address : 0x%08X\n", LOADADDR);
+    printf(" \t           Main Entrance   : 0x%08X\n", main_addr);
+    if(ctl == 0)    printf(" \t           Booting Mode    : Full\n");
+    else            printf(" \t           Booting Mode    : Reduced\n");
 
     return;
 }
@@ -220,12 +220,14 @@ int main(int argc, char** argv)
     In32((voluint32)SPIBASE);
 
     // Check the switch for booting corresponding mode.
+    //  0 - Switch is toggled(to the top), 1 - Switch is no toggled
     ctl = In32((voluint32)HSWITCH_BASE_ADDR);
     printLogo(main, ctl);
 
 
     // REDUCED Mode, directly boot from SPI.
-    if(ctl == 0)
+    //  Default boot method.
+    if(ctl == 1)
     {
         printf(" -> Booting from 0x%08X...\n", addr);
         printf(" -> Enable KSEG0 Cacheability...\n\n");
