@@ -23,14 +23,9 @@
 #include "printf.h"
 #include "cattery_peripherals.h"
 
-// #ifdef DEBUG
-// #define printf printf
-// #else
-// #define printf (void)
-// #endif
-
-void printLogo(uint32 main_addr)
+void printLogo(uint32 main_addr, uint8 ctl)
 {
+    printf("\n");
     printf("                      /\\_____/\\\n");
     printf("                     /  o   o  \\\n");
     printf("                    ( ==  ^  == )\n");
@@ -40,19 +35,15 @@ void printLogo(uint32 main_addr)
     printf("                  (__(__)___(__)__)\n");
     printf(" \n");
     printf(" Welcome to Cattery Bootloader.\n");
-    printf(" \t## STATUS:\n");
-    printf(" \t\tBootloader Loading Address : 0x%08X\n", LOADADDR);
-    printf(" \t\t           Main Entrance   : 0x%08X\n", main_addr);
-    #ifdef DEBUG
-    printf(" \t\t           Booting Mode    : Full\n");
-    #else
-    printf(" \t\t           Booting Mode    : Reduced\n");
-    #endif
+    printf(" ## STATUS:\n");
+    printf(" \tBootloader Loading Address : 0x%08X\n", LOADADDR);
+    printf(" \t           Main Entrance   : 0x%08X\n", main_addr);
+    if(ctl == 0)    printf(" \t           Booting Mode    : Full\n");
+    else            printf(" \t           Booting Mode    : Reduced\n");
 
     return;
 }
 
-#ifdef DEBUG
 // Print full mode functions.
 void printHelp()
 {
@@ -219,11 +210,39 @@ int main(int argc, char** argv)
     uint32  itr         = 0, mem_itr    = 0, process    = 0;
     uint32  err_flag    = 0;
     uint32  spi_data    = 0, ram_data   = 0;
+    uint32  addr        = SPIBASE;
 
     Toggle_CKSEG0(0);
 
-    printLogo(main);
+    // Start to boot U-Boot(or else) from SPI.
+    //  Generally dump SPI Flash for twice to ensure the data is right.
+    In32((voluint32)SPIBASE);
+    In32((voluint32)SPIBASE);
 
+    // Check the switch for booting corresponding mode.
+    //  0 - Switch is toggled(to the top), 1 - Switch is no toggled
+    ctl = In32((voluint32)HSWITCH_BASE_ADDR);
+    printLogo(main, ctl);
+
+
+    // REDUCED Mode, directly boot from SPI.
+    //  Default boot method.
+    if(ctl == 1)
+    {
+        printf(" -> Booting from 0x%08X...\n", addr);
+        printf(" -> Enable KSEG0 Cacheability...\n\n");
+        Toggle_CKSEG0(1);
+        printf("#### Handle control to the next stage. ####\n");
+        
+        asm volatile
+        (   
+            "jr %0\t\n  \
+            nop \t\n"   \
+            ::"r"(addr)
+        );
+    }
+
+    // FULL Mode
     while(1)
     {
         printHelp();
@@ -283,13 +302,11 @@ int main(int argc, char** argv)
         {
             uint32 addr = SPIBASE;
             printf(" -> Booting from SPI...\n");
-            printf(" -> Dumping 1K data from SPI Flash...\n");
-            DumpAddrRange(SPIBASE, 1024);
 
-            printf(" -> Enable KSEG0 Cacheability...\n\n");
-            Toggle_CKSEG0(1);
+            printf(" -> Enable KSEG0 Cacheability? (0:NO / 1:YES) : ");
+            if(UART16550_ReadbackChar() == '1') Toggle_CKSEG0(1);
 
-            printf("### Handle control to Das U-Boot. ###\n");
+            printf("\n### Handle control to Das U-Boot. ###\n");
             
             asm volatile
             (   
@@ -359,35 +376,6 @@ int main(int argc, char** argv)
     
     return 0;
 }
-#else
-int main(int argc, char** argv)                                
-{
-    uint32 addr = SPIBASE;
-
-    Toggle_CKSEG0(0);
-    printf("\n");
-    printLogo(main);
-
-    // Start to boot U-Boot(or else) from SPI.
-    //  Generally dump SPI Flash for twice to ensure the data is right.
-    In32((voluint32)SPIBASE);
-    In32((voluint32)SPIBASE);
-
-    printf(" -> Booting from 0x%08X...\n", addr);
-    printf(" -> Enable KSEG0 Cacheability...\n\n");
-    Toggle_CKSEG0(1);
-    printf("#### Handle control to the next stage. ####\n");
-    
-    asm volatile
-    (   
-        "jr %0\t\n  \
-        nop \t\n"   \
-        ::"r"(addr)
-    );
-
-    return 0;
-}
-#endif
 
 void end_call()
 {
