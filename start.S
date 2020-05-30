@@ -104,9 +104,10 @@ LEAF(_start)
     mtc0    t0, CP0_STATUS 
 
         # Disable kernel mode cache
-    mfc0	t0, CP0_CONFIG
-    and	t0, ~0x7
-    mtc0	t0, CP0_CONFIG
+    mfc0    t0, CP0_CONFIG
+    and     t0, ~0x7
+    ori     t0, 0x2
+    mtc0    t0, CP0_CONFIG
 
         # setup stack
     /* set up stack */
