@@ -22,7 +22,7 @@
 ######## CONFIGURATION #########
 
 ## GENERAL CONFIG
-LEDBASE 		=		0xBFD10000					# Base addr of AXI GPIO to control LEDs
+GPIOBASE 		=		0xBFD10000					# Base addr of AXI GPIO to control LEDs
 UARTBASE 		= 		0xBFD12000					# Base addr of AXI UART16550. 
 													# RegOffset is calculated in cattery_peripherals.h
 SPIBASE 		= 		0xBDA00000					# Base addr of SPI Flash read addr, not CRs addr!
@@ -50,7 +50,7 @@ OBJDUMP =  $(CROSS_COMPILE)objdump
 
 TARGET = cattery_bootloader
 
-CFLAGS = -DLEDBASE=${LEDBASE} -DUARTBASE=${UARTBASE} -DSPIBASE=${SPIBASE} -DLOADADDR=${LOADADDR} -DRAM_LOADADDR=${RAM_LOADADDR} -DRAMSIZE=${RAMSIZE} -DSTACK_SIZE=${STACK_SIZE} -O0 -msoft-float -mips32 -mxgot -fno-builtin -fno-PIC -fno-PIE -ffunction-sections -fdata-sections -G 0 -nostdlib -ffreestanding
+CFLAGS = -DGPIOBASE=${GPIOBASE} -DUARTBASE=${UARTBASE} -DSPIBASE=${SPIBASE} -DLOADADDR=${LOADADDR} -DRAM_LOADADDR=${RAM_LOADADDR} -DRAMSIZE=${RAMSIZE} -DSTACK_SIZE=${STACK_SIZE} -O0 -msoft-float -mips32 -mxgot -fno-builtin -fno-PIC -fno-PIE -ffunction-sections -fdata-sections -G 0 -nostdlib -ffreestanding
 
 # Drop some uninteresting sections in the kernel.
 # This is only relevant for ELF kernels but doesn't hurt a.out
